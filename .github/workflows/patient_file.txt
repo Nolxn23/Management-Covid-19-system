@@ -1,0 +1,38 @@
+001	Lina	A	ATO	0139949948	testmail200@gmail.com	
+002	luna	A	AEO	01933499495	lunainheaven@gmail.com	
+003	yasmin	A	ACC	01293938484	yas_maz545@yahoo.co.uk	
+004	Anna	C	ACC	01233444595	annajobl12@msn.net	
+005	Bob	    A	ATO	01293948585	bobthebuilder@gmail.com	
+006	Cheyne	A	ATO	0123341414	cheyneburberry@yahoo.com	
+007	Dylan	A	ATO	0123412435	dylblkwd@gmail.com	
+008	Aleks	A	ATO	01231234414	aleksman200@gmail.com	
+009	Daniel	A	ATO	01399595944	dantheman20XD@gmail.com	
+010	jasmin	B	ACC	0193994844	welikelina23@gmail.com	
+011	Wilson	B	ATO	0123999484	wilsonkhai@yahoo.co.uk	
+
+
+
+0001
+positive
+QHNF
+
+0001 T2
+negative
+QDFR
+
+0001 T3
+negative
+RU
+
+0002
+positive
+QHNF
+
+0002 T2
+negative
+QDFR
+
+0002 T3
+negative
+RU
+
