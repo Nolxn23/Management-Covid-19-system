@@ -3,7 +3,7 @@
 
 def registerpatient():
     records = []
-    for i in range(2):
+    for i in range(1):
         item = []
         idNum = input('Enter ID number: ')
         item.append(idNum)
@@ -13,7 +13,7 @@ def registerpatient():
         item.append(zone)
         groupNum = input('Enter group: ')
         item.append(groupNum)
-        phoneNum = input('Enter phone number: ')
+        phoneNum = input('Enter phone number(+60): ')
         item.append(phoneNum)
         emailAdd = input('Enter email address: ')
         item.append(emailAdd)
@@ -38,8 +38,10 @@ def savePatientdetails():
         fileHandler.write('\n')
     fileHandler.close()
 
-        
+    return menu()    
+
 def printPatientdetails():
+    print("**********************************Patient Details************************************")
     try:
         fileHandler = open('patient_file.txt','r')
     except:
@@ -51,6 +53,9 @@ def printPatientdetails():
         
     fileHandler.close()
     
+    print("")
+    print("")
+    return menu()
         
 def searchPatientdetails():
     try:
@@ -60,7 +65,8 @@ def searchPatientdetails():
         exit()
 
     search_key = input('Please type in ID number: ')
-    
+    print("**********************************Searched Patient Details************************************")
+
     for line in fileHandler:
         line = line.rstrip()
         if not search_key.lower() in line.lower(): 
@@ -68,13 +74,16 @@ def searchPatientdetails():
         print(line)
         
     fileHandler.close()
-
+    print("")
+    print("")
+    return menu()
+    
 def printTestresults():
     #display menu for tests results and action taken
     print("************COVID-19 MANAGEMENT**********")
     print("************TEST MENU**************")
     print('please select your desired option:')
-    print('1. Carry out TEST 1')
+    print('1. Carry out TEST 1(required for every patient)')
     print('2. Carry out TEST 2')
     print('3. Carry out TEST 3')
     print('4. Exit')
@@ -94,8 +103,9 @@ def printTestresults():
 
 
 def test_1():
+    #MAIN TEST MENU - when user prompts for choice 4 in the MAIN MANAGEMENT MENU
     print("************COVID-19 MANAGEMENT**********")
-    print("************TEST MENU**************")
+    print("************TEST 1 MENU**************")
     print('please select TEST according to Groupings:')
     print('ATO-T1 [1]')
     print('ACC T1 [2]')
@@ -107,605 +117,1311 @@ def test_1():
     choice = int(input('Enter selection: '))
 
     if choice==1:
-        print('If positive: QHNF')
-        print('If Negative - QDFR (T2 will be carried out)')
-        
-        print("Enter new case id(according to first ID)(00X = 000X):  ")
-        id=input()
-        print("Enter Test Result positive/negative:  ")
-        test=input()
-        print("Enter NW or ICU if positive:  ")
-        ward=input()
-        print("Enter Action needed to be taken(QHNF/QDFR):  ")
-        action=input()
-        with open('testfile.txt','a') as testfile:
-                testfile.write(id)
-                testfile.write("\n")
-                testfile.write(test)
-                testfile.write("\n")
-                testfile.write(ward)
-                testfile.write("\n")
-                testfile.write(action)
-                testfile.write("\n\n")
-                testfile.close()
-                
-        with open('patient_file.txt','a') as patient_file:
-                patient_file.write(id)
-                patient_file.write("\n")
-                patient_file.write(test)
-                patient_file.write("\n")
-                patient_file.write(ward)
-                patient_file.write("\n")
-                patient_file.write(action)
-                patient_file.write("\n\n")
-                patient_file.close()
-                print("Record has been written to file arcording to first ID ")
+        #prompts user for test results in a new sub menu
+        print("************COVID-19 MANAGEMENT**********")
+        print("************TEST 1 MENU**************")
+        print('please select TEST RESULTS')
+        print('1. POSITIVE')
+        print('2. NEGATIVE')
+        print()
+        choice = int(input('Enter selection: '))
+
+        if choice==1:
+            #prompt user for information (case ID, test result and NW/ICU)
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("Enter NW or ICU:")
+            ward=input()
+            action="QHNF"
+            print("Action taken:"+action)
+            status="ACTIVE"
+            print(status)
+            #open file - then saves the input above (appending)
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(ward)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\t")
+                    testfile.write(status)
+                    testfile.write("\n")
+                    testfile.close()
+            #open file - then saves the same input above (appending) to a different file (patient_file.txt)   
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(ward)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\t")
+                    patient_file.write(status)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
             
-    
-   
-   
-    if choice==2:
-        print("If positive: QHNF ")
-        print('If Negative - QDFR (T2 will be carried out)')
-     
-        print("Enter new case id(according to first ID)(00X = 000X):  ")
-        id=input()
-        print("Enter Test Result positive/negative:  ")
-        test=input()
-        print("Enter NW or ICU if positive:  ")
-        ward=input()
-        print("Enter Action needed to be taken(QHNF/QDFR):  ")
-        action=input()
-        with open('testfile.txt','a') as testfile:
-                testfile.write(id)
-                testfile.write("\n")
-                testfile.write(test)
-                testfile.write("\n")
-                testfile.write(ward)
-                testfile.write("\n")
-                testfile.write(action)
-                testfile.write("\n\n")
-                testfile.close()
-                
-        with open('patient_file.txt','a') as patient_file:
-                patient_file.write(id)
-                patient_file.write("\n")
-                patient_file.write(test)
-                patient_file.write("\n")
-                patient_file.write(ward)
-                patient_file.write("\n")
-                patient_file.write(action)
-                patient_file.write("\n\n")
-                patient_file.close()
-                print("Record has been written to file arcording to first ID ")
-   
-    
-   
-    if choice==3:
-        print("if positive: QHNF ")
-        print('If Negative - QDFR (T2 will be carried out)')
+            return menu()  
         
-        print("Enter new case id(according to first ID)(00X = 000X):  ")
-        id=input()
-        print("Enter Test Result positive/negative:  ")
-        test=input()
-        print("Enter NW or ICU if positive:  ")
-        ward=input()
-        print("Enter Action needed to be taken(QHNF/QDFR):  ")
-        action=input()
-        with open('testfile.txt','a') as testfile:
-                testfile.write(id)
-                testfile.write("\n")
-                testfile.write(test)
-                testfile.write("\n")
-                testfile.write(ward)
-                testfile.write("\n")
-                testfile.write(action)
-                testfile.write("\n\n")
-                testfile.close()
+        elif choice==2:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("Test 2 Required")
+            action="QDFR"
+            print("Action taken:"+action)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\n")
+                    testfile.close()
                 
-        with open('patient_file.txt','a') as patient_file:
-                patient_file.write(id)
-                patient_file.write("\n")
-                patient_file.write(test)
-                patient_file.write("\n")
-                patient_file.write(ward)
-                patient_file.write("\n")
-                patient_file.write(action)
-                patient_file.write("\n\n")
-                patient_file.close()
-                print("Record has been written to file arcording to first ID ")
-    
-    
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
    
-    if choice==4:
-        print('If positive: QHNF')
-        print('If Negative - HQFR (proceed to carry out 2nd test)')
+            return menu()
+    
+    elif choice==2:
+        #prompts user for test results in a new sub menu
+        print("************COVID-19 MANAGEMENT**********")
+        print("************TEST 1 MENU**************")
+        print('please select TEST RESULTS')
+        print('1. POSITIVE')
+        print('2. NEGATIVE')
+        print()
+        choice = int(input('Enter selection: '))
 
-        print("----proceed to test 2----")
-        print("----In the test main menu----")
+        if choice==1:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("Enter NW or ICU:")
+            ward=input()
+            action="QHNF"
+            print("Action taken:"+action)
+            status="ACTIVE"
+            print(status)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(ward)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\t")
+                    testfile.write(status)
+                    testfile.write("\n")
+                    testfile.close()
+                
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(ward)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\t")
+                    patient_file.write(status)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+   
+            return menu()
         
-        print("Enter new case id(according to first ID)(00X = 000X):  ")
-        id=input()
-        print("Enter Test Result positive/negative:  ")
-        test=input()
-        print("Enter NW or ICU if positive:  ")
-        ward=input()
-        print("Enter Action needed to be taken(QHNF/QDFR):  ")
-        action=input()
-        with open('testfile.txt','a') as testfile:
-                testfile.write(id)
-                testfile.write("\n")
-                testfile.write(test)
-                testfile.write("\n")
-                testfile.write(ward)
-                testfile.write("\n")
-                testfile.write(action)
-                testfile.write("\n\n")
-                testfile.close()
+        elif choice==2:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("Test 2 Required")
+            action="QDFR"
+            print("Action taken:"+action)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\n")
+                    testfile.close()
                 
-        with open('patient_file.txt','a') as patient_file:
-                patient_file.write(id)
-                patient_file.write("\n")
-                patient_file.write(test)
-                patient_file.write("\n")
-                patient_file.write(ward)
-                patient_file.write("\n")
-                patient_file.write(action)
-                patient_file.write("\n\n")
-                patient_file.close()
-                print("Record has been written to file arcording to first ID ")
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+   
+        return menu()
+ 
+    elif choice==3:
+        #prompts user for test results in a new sub menu
+        print("************COVID-19 MANAGEMENT**********")
+        print("************TEST 1 MENU**************")
+        print('please select TEST RESULTS')
+        print('1. POSITIVE')
+        print('2. NEGATIVE')
+        print()
+        choice = int(input('Enter selection: '))
 
+        if choice==1:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("Enter NW or ICU:")
+            ward=input()
+            action="QHNF"
+            print("Action taken:"+action)
+            status="ACTIVE"
+            print(status)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(ward)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\t")
+                    testfile.write(status)
+                    testfile.write("\n")
+                    testfile.close()
+                
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(ward)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\t")
+                    patient_file.write(status)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+            return menu()   
+        
+        elif choice==2:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("Test 2 Required")
+            action="QDFR"
+            print("Action taken:"+action)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\n")
+                    testfile.close()
+                
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\t")
+                    patient_file.write(status)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+   
+            return menu()
+    
+    
+   
+    elif choice==4:
+        #prompts user for test results in a new sub menu
+        print("************COVID-19 MANAGEMENT**********")
+        print("************TEST 1 MENU**************")
+        print('please select TEST RESULTS')
+        print('1. POSITIVE')
+        print('2. NEGATIVE')
+        print()
+        choice = int(input('Enter selection: '))
+
+        if choice==1:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("Enter NW or ICU:")
+            ward=input()
+            action="QHNF"
+            print("Action taken:"+action)
+            status="ACTIVE"
+            print(status)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\nt")
+                    testfile.write(ward)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\t")
+                    testfile.write(status)
+                    testfile.write("\n")
+                    testfile.close()
+                
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(ward)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\t")
+                    patient_file.write(status)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+            
+            return menu()   
+        
+        elif choice==2:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("Test 2 Required")
+            action="HQFR"
+            print("Action taken:"+action)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\n")
+                    testfile.close()
+                
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+   
+            return menu()
     
    
    
-    if choice==5:   
-        print('If positive: QHNF')
-        print('If Negative - CWFR (T2 will be carried out)')
+    elif choice==5:   
+        #prompts user for test results in a new sub menu
+        print("************COVID-19 MANAGEMENT**********")
+        print("************TEST 1 MENU**************")
+        print('please select TEST RESULTS')
+        print('1. POSITIVE')
+        print('2. NEGATIVE')
+        print()
+        choice = int(input('Enter selection: '))
 
-        print("Enter new case id(according to first ID)(00X = 000X):  ")
-        id=input()
-        print("Enter Test Result positive/negative:  ")
-        test=input()
-        print("Enter NW or ICU if positive:  ")
-        ward=input()
-        print("Enter Action needed to be taken(QHNF/CWFR):  ")
-        action=input()
-        with open('testfile.txt','a') as testfile:
-                testfile.write(id)
-                testfile.write("\n")
-                testfile.write(test)
-                testfile.write("\n")
-                testfile.write(ward)
-                testfile.write("\n")
-                testfile.write(action)
-                testfile.write("\n\n")
-                testfile.close()
+        if choice==1:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("Enter NW or ICU:")
+            ward=input()
+            action="HQNF"
+            print("Action taken:"+action)
+            status="ACTIVE"
+            print(status)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(ward)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\t")
+                    testfile.write(status)
+                    testfile.write("\n")
+                    testfile.close()
                 
-        with open('patient_file.txt','a') as patient_file:
-                patient_file.write(id)
-                patient_file.write("\n")
-                patient_file.write(test)
-                patient_file.write("\n")
-                patient_file.write(ward)
-                patient_file.write("\n")
-                patient_file.write(action)
-                patient_file.write("\n\n")
-                patient_file.close()
-                print("Record has been written to file arcording to first ID ")
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(ward)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\t")
+                    patient_file.write(status)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+            
+            return menu()   
+        
+        elif choice==2:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("Test 2 Required")
+            action="CWFR"
+            print("Action taken:"+action)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\n")
+                    testfile.close()
+                
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+   
+            return menu()
     
-    
-    if choice==6:
+    elif choice==6:
         print('thank you for using covid 19 management system')
     
-    return menu()    
+    return menu()  
     
     
     
     
 def test_2():
-    #display menu for test results and action taken for selection 2 (carry out TEST 2)  
+   #MAIN TEST MENU - when user prompts for choice 4 in the MAIN MANAGEMENT MENU
     print("************COVID-19 MANAGEMENT**********")
     print("************TEST 2 MENU**************")
     print('please select TEST according to Groupings:')
-    print('ATO-T1 [1]')
-    print('ACC T1 [2]')
-    print('AEO-T1 [3]')
-    print('SID-T1 [4]')
-    print('AHS-T1 [5]')
+    print('ATO-T2 [1]')
+    print('ACC T2 [2]')
+    print('AEO-T2 [3]')
+    print('SID-T2 [4]')
+    print('AHS-T2 [5]')
     print('6.   Exit')
     print()
     choice = int(input('Enter selection: '))
 
     if choice==1:
-        print('If positive: QHNF')
-        print('If Negative - QDFR (T2 will be carried out)')
-        
-        print("Enter new case id(according to first ID)(00X = 000X):  ")
-        id=input()
-        print("Enter Test Result positive/negative:  ")
-        test=input()
-        print("Enter NW or ICU if positive:  ")
-        ward=input()
-        print("Enter Action needed to be taken(QHNF/QDFR):  ")
-        action=input()
-        with open('testfile2.txt','a') as testfile2:
-                testfile2.write(id)
-                testfile2.write("\n")
-                testfile2.write(test)
-                testfile2.write("\n")
-                testfile2.write(ward)
-                testfile2.write("\n")
-                testfile2.write(action)
-                testfile2.write("\n\n")
-                testfile2.close()
-                
-        with open('patient_file.txt','a') as patient_file:
-                patient_file.write(id)
-                patient_file.write("\n")
-                patient_file.write(test)
-                patient_file.write("\n")
-                patient_file.write(ward)
-                patient_file.write("\n")
-                patient_file.write(action)
-                patient_file.write("\n\n")
-                patient_file.close()
-                print("Record has been written to file arcording to first ID ")
+        #prompts user for test results in a new sub menu
+        print("************COVID-19 MANAGEMENT**********")
+        print("************TEST MENU**************")
+        print('please select TEST RESULTS')
+        print('1. POSITIVE')
+        print('2. NEGATIVE')
+        print()
+        choice = int(input('Enter selection: '))
+
+        if choice==1:
             
-    
-   
-   
-    if choice==2:
-        print("If positive: QHNF ")
-        print('If Negative - QDFR (T2 will be carried out)')
-     
-        print("Enter new case id(according to first ID)(00X = 000X):  ")
-        id=input()
-        print("Enter Test Result positive/negative:  ")
-        test=input()
-        print("Enter NW or ICU if positive:  ")
-        ward=input()
-        print("Enter Action needed to be taken(QHNF/QDFR):  ")
-        action=input()
-        with open('testfile2.txt','a') as testfile2:
-                testfile2.write(id)
-                testfile2.write("\n")
-                testfile2.write(test)
-                testfile2.write("\n")
-                testfile2.write(ward)
-                testfile2.write("\n")
-                testfile2.write(action)
-                testfile2.write("\n\n")
-                testfile2.close()
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("Enter NW or ICU:")
+            ward=input()
+            action="QHNF"
+            print("Action taken:"+action)
+            status="ACTIVE"
+            print(status)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(ward)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\t")
+                    testfile.write(status)
+                    testfile.write("\n")
+                    testfile.close()
                 
-        with open('patient_file.txt','a') as patient_file:
-                patient_file.write(id)
-                patient_file.write("\n")
-                patient_file.write(test)
-                patient_file.write("\n")
-                patient_file.write(ward)
-                patient_file.write("\n")
-                patient_file.write(action)
-                patient_file.write("\n\n")
-                patient_file.close()
-                print("Record has been written to file arcording to first ID ")
-   
-    
-   
-    if choice==3:
-        print("if positive: QHNF ")
-        print('If Negative - QDFR (T2 will be carried out)')
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("tn")
+                    patient_file.write(test)
+                    patient_file.write("\nt")
+                    patient_file.write(ward)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\t")
+                    patient_file.write(status)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+            
+            return menu()  
         
-        print("Enter new case id(according to first ID)(00X = 000X):  ")
-        id=input()
-        print("Enter Test Result positive/negative:  ")
-        test=input()
-        print("Enter NW or ICU if positive:  ")
-        ward=input()
-        print("Enter Action needed to be taken(QHNF/QDFR):  ")
-        action=input()
-        with open('testfile2.txt','a') as testfile2:
-                testfile2.write(id)
-                testfile2.write("\n")
-                testfile2.write(test)
-                testfile2.write("\n")
-                testfile2.write(ward)
-                testfile2.write("\n")
-                testfile2.write(action)
-                testfile2.write("\n\n")
-                testfile2.close()
+        elif choice==2:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("Test 3 Required")
+            action="QDFR"
+            print("Action taken:"+action)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\n")
+                    testfile.close()
                 
-        with open('patient_file.txt','a') as patient_file:
-                patient_file.write(id)
-                patient_file.write("\n")
-                patient_file.write(test)
-                patient_file.write("\n")
-                patient_file.write(ward)
-                patient_file.write("\n")
-                patient_file.write(action)
-                patient_file.write("\n\n")
-                patient_file.close()
-                print("Record has been written to file arcording to first ID ")
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+   
+            return menu()   
+    
+    elif choice==2:
+        #prompts user for test results in a new sub menu
+        print("************COVID-19 MANAGEMENT**********")
+        print("************TEST 2 MENU**************")
+        print('please select TEST RESULTS')
+        print('1. POSITIVE')
+        print('2. NEGATIVE')
+        print()
+        choice = int(input('Enter selection: '))
+
+        if choice==1:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("Enter NW or ICU:")
+            ward=input()
+            action="QHNF"
+            print("Action taken:"+action)
+            status="ACTIVE"
+            print(status)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(ward)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\t")
+                    testfile.write(status)
+                    testfile.write("\n")
+                    testfile.close()
+                
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(ward)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\t")
+                    patient_file.write(status)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+   
+            return menu()
+        
+        elif choice==2:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("Test 3 Required")
+            action="QDFR"
+            print("Action taken:"+action)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\n")
+                    testfile.close()
+                
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+   
+        return menu()
+ 
+    if choice==3:
+        #prompts user for test results in a new sub menu
+        print("************COVID-19 MANAGEMENT**********")
+        print("************TEST 2 MENU**************")
+        print('please select TEST RESULTS')
+        print('1. POSITIVE')
+        print('2. NEGATIVE')
+        print()
+        choice = int(input('Enter selection: '))
+
+        if choice==1:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("Enter NW or ICU:")
+            ward=input()
+            action="QHNF"
+            print("Action taken:"+action)
+            status="ACTIVE"
+            print(status)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(ward)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\t")
+                    testfile.write(status)
+                    testfile.write("\n")
+                    testfile.close()
+                
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(ward)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\t")
+                    patient_file.write(status)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+            
+            return menu()    
+        
+        elif choice==2:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("Test 3 Required")
+            action="QDFR"
+            print("Action taken:"+action)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\n")
+                    testfile.close()
+                
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+   
+            return menu()
     
     
    
     if choice==4:
-        print('If positive: QHNF')
-        print('If Negative - HQFR (proceed to carry out 2nd test)')
+        #prompts user for test results in a new sub menu
+        print("************COVID-19 MANAGEMENT**********")
+        print("************TEST 2 MENU**************")
+        print('please select TEST RESULTS')
+        print('1. POSITIVE')
+        print('2. NEGATIVE')
+        print()
+        choice = int(input('Enter selection: '))
 
-        print("----proceed to test 2----")
-        print("----In the test main menu----")
-        
-        print("Enter new case id(according to first ID)(00X = 000X):  ")
-        id=input()
-        print("Enter Test Result positive/negative:  ")
-        test=input()
-        print("Enter NW or ICU if positive:  ")
-        ward=input()
-        print("Enter Action needed to be taken(QHNF/QDFR):  ")
-        action=input()
-        with open('testfile2.txt','a') as testfile2:
-                testfile2.write(id)
-                testfile2.write("\n")
-                testfile2.write(test)
-                testfile2.write("\n")
-                testfile2.write(ward)
-                testfile2.write("\n")
-                testfile2.write(action)
-                testfile2.write("\n\n")
-                testfile2.close()
+        if choice==1:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("Enter NW or ICU:")
+            ward=input()
+            action="QHNF"
+            print("Action taken:"+action)
+            status="ACTIVE"
+            print(status)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\nt")
+                    testfile.write(ward)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\t")
+                    testfile.write(status)
+                    testfile.write("\n")
+                    testfile.close()
                 
-        with open('patient_file.txt','a') as patient_file:
-                patient_file.write(id)
-                patient_file.write("\n")
-                patient_file.write(test)
-                patient_file.write("\n")
-                patient_file.write(ward)
-                patient_file.write("\n")
-                patient_file.write(action)
-                patient_file.write("\n\n")
-                patient_file.close()
-                print("Record has been written to file arcording to first ID ")
-
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(ward)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\t")
+                    patient_file.write(status)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+            return menu()    
+        
+        elif choice==2:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("Test 3 Required")
+            action="HQFR"
+            print("Action taken:"+action)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\n")
+                    testfile.close()
+                
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+   
+            return menu()
     
    
    
     if choice==5:   
-        print('If positive: QHNF')
-        print('If Negative - CWFR (T2 will be carried out)')
+        #prompts user for test results in a new sub menu
+        print("************COVID-19 MANAGEMENT**********")
+        print("************TEST 2 MENU**************")
+        print('please select TEST RESULTS')
+        print('1. POSITIVE')
+        print('2. NEGATIVE')
+        print()
+        choice = int(input('Enter selection: '))
 
-        print("Enter new case id(according to first ID)(00X = 000X):  ")
-        id=input()
-        print("Enter Test Result positive/negative:  ")
-        test=input()
-        print("Enter NW or ICU if positive:  ")
-        ward=input()
-        print("Enter Action needed to be taken(QHNF/CWFR):  ")
-        action=input()
-        with open('testfile2.txt','a') as testfile2:
-                testfile2.write(id)
-                testfile2.write("\n")
-                testfile2.write(test)
-                testfile2.write("\n")
-                testfile2.write(ward)
-                testfile2.write("\n")
-                testfile2.write(action)
-                testfile2.write("\n\n")
-                testfile2.close()
+        if choice==1:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("Enter NW or ICU:")
+            ward=input()
+            action="HQNF"
+            print("Action taken:"+action)
+            status="ACTIVE"
+            print(status)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(ward)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\t")
+                    testfile.write(status)
+                    testfile.write("\n")
+                    testfile.close()
                 
-        with open('patient_file.txt','a') as patient_file:
-                patient_file.write(id)
-                patient_file.write("\n")
-                patient_file.write(test)
-                patient_file.write("\n")
-                patient_file.write(ward)
-                patient_file.write("\n")
-                patient_file.write(action)
-                patient_file.write("\n\n")
-                patient_file.close()
-                print("Record has been written to file arcording to first ID ")
-    
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(ward)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\t")
+                    patient_file.write(status)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+           
+            return menu()   
+        
+        elif choice==2:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("Test 3 Required")
+            action="CWFR"
+            print("Action taken:"+action)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\n")
+                    testfile.close()
+                
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+   
+            return menu()
     
     if choice==6:
         print('thank you for using covid 19 management system')
     
     return menu()    
+    
 
 
 def test_3():
-    #display menu for test results and action taken for selection 3 (carry out TEST 3)
+    #MAIN TEST MENU - when user prompts for choice 4 in the MAIN MANAGEMENT MENU
     print("************COVID-19 MANAGEMENT**********")
-    print("************TEST 3 MENU**************")
+    print("************ TEST 3 MENU**************")
     print('please select TEST according to Groupings:')
-    print('ATO-T1 [1]')
-    print('ACC T1 [2]')
-    print('AEO-T1 [3]')
-    print('SID-T1 [4]')
-    print('AHS-T1 [5]')
+    print('ATO-T3 [1]')
+    print('ACC T3 [2]')
+    print('AEO-T3 [3]')
+    print('SID-T3 [4]')
+    print('AHS-T3 [5]')
     print('6.   Exit')
     print()
     choice = int(input('Enter selection: '))
 
     if choice==1:
-        print('If positive: QHNF')
-        print('If Negative - RU')
-        
-        print("Enter previous case ID (followed by T3)(00X = 000X T3):  ")
-        id=input()
-        print("Enter Test Result positive/negative:  ")
-        test=input()
-        print("Enter NW or ICU if positive:  ")
-        ward=input()
-        print("Enter Action needed to be taken(QHNF/RU):  ")
-        action=input()
-        with open('testfile3.txt','a') as testfile3:
-                testfile3.write(id)
-                testfile3.write("\n")
-                testfile3.write(test)
-                testfile3.write("\n")
-                testfile3.write(ward)
-                testfile3.write("\n")
-                testfile3.write(action)
-                testfile3.write("\n\n")
-                testfile3.close()
-                
-        with open('patient_file.txt','a') as patient_file:
-                patient_file.write(id)
-                patient_file.write("\n")
-                patient_file.write(test)
-                patient_file.write("\n")
-                patient_file.write(ward)
-                patient_file.write("\n")
-                patient_file.write(action)
-                patient_file.write("\n\n")
-                patient_file.close()
-                print("Record has been written to file arcording to first ID ")
+        #prompts user for test results in a new sub menu
+        print("************COVID-19 MANAGEMENT**********")
+        print("************TEST 3 MENU**************")
+        print('please select TEST RESULTS')
+        print('1. POSITIVE')
+        print('2. NEGATIVE')
+        print()
+        choice = int(input('Enter selection: '))
 
-    if choice==2:
-        print("If positive: QHNF ")
-        print('If Negative - RU')
-     
-        print("Enter previous case ID (followed by T3)(00X = 000X T3):  ")
-        id=input()
-        print("Enter Test Result positive/negative:  ")
-        test=input()
-        print("Enter NW or ICU if positive:  ")
-        ward=input()
-        print("Enter Action needed to be taken(QHNF/RU):  ")
-        action=input()
-        with open('testfile3.txt','a') as testfile3:
-                testfile3.write(id)
-                testfile3.write("\n")
-                testfile3.write(test)
-                testfile3.write("\n")
-                testfile3.write(ward)
-                testfile3.write("\n")
-                testfile3.write(action)
-                testfile3.write("\n\n")
-                testfile3.close()
+        if choice==1:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("Enter NW or ICU:")
+            ward=input()
+            action="QHNF"
+            print("Action taken:"+action)
+            status="ACTIVE"
+            print(status)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(ward)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\t")
+                    testfile.write(status)
+                    testfile.write("\n")
+                    testfile.close()
                 
-        with open('patient_file.txt','a') as patient_file:
-                patient_file.write(id)
-                patient_file.write("\n")
-                patient_file.write(test)
-                patient_file.write("\n")
-                patient_file.write(ward)
-                patient_file.write("\n")
-                patient_file.write(action)
-                patient_file.write("\n\n")
-                patient_file.close()
-                print("Record has been written to file arcording to first ID ")
-
-    if choice==3:
-        print("if positive: QHNF ")
-        print('If Negative - RU')
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(ward)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\t")
+                    patient_file.write(status)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+           
+            return menu()
         
-        print("Enter previous case ID (followed by T3)(00X = 000X T3):  ")
-        id=input()
-        print("Enter Test Result positive/negative:  ")
-        test=input()
-        print("Enter NW or ICU if positive:  ")
-        ward=input()
-        print("Enter Action needed to be taken(QHNF/RU):  ")
-        action=input()
-        with open('testfile3.txt','a') as testfile3:
-                testfile3.write(id)
-                testfile3.write("\n")
-                testfile3.write(test)
-                testfile3.write("\n")
-                testfile3.write(ward)
-                testfile3.write("\n")
-                testfile3.write(action)
-                testfile3.write("\n\n")
-                testfile3.close()
+        elif choice==2:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("no more tests required")
+            action="RU"
+            print("Action taken:"+action)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\n")
+                    testfile.close()
                 
-        with open('patient_file.txt','a') as patient_file:
-                patient_file.write(id)
-                patient_file.write("\n")
-                patient_file.write(test)
-                patient_file.write("\n")
-                patient_file.write(ward)
-                patient_file.write("\n")
-                patient_file.write(action)
-                patient_file.write("\n\n")
-                patient_file.close()
-                print("Record has been written to file arcording to first ID ")
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+   
+            return menu() 
     
-    if choice==4:
-        print("if positive: QHNF ")
-        print('If Negative - RU')
-        
-        print("Enter previous case ID (followed by T3)(00X = 000X T3):  ")
-        id=input()
-        print("Enter Test Result positive/negative:  ")
-        test=input()
-        print("Enter NW or ICU if positive:  ")
-        ward=input()
-        print("Enter Action needed to be taken(QHNF/RU):  ")
-        action=input()
-        with open('testfile3.txt','a') as testfile3:
-                testfile3.write(id)
-                testfile3.write("\n")
-                testfile3.write(test)
-                testfile3.write("\n")
-                testfile3.write(ward)
-                testfile3.write("\n")
-                testfile3.write(action)
-                testfile3.write("\n\n")
-                testfile3.close()
-                
-        with open('patient_file.txt','a') as patient_file:
-                patient_file.write(id)
-                patient_file.write("\n")
-                patient_file.write(test)
-                patient_file.write("\n")
-                patient_file.write(ward)
-                patient_file.write("\n")
-                patient_file.write(action)
-                patient_file.write("\n\n")
-                patient_file.close()
-                print("Record has been written to file arcording to first ID ")
+    elif choice==2:
+        #prompts user for test results in a new sub menu
+        print("************COVID-19 MANAGEMENT**********")
+        print("************TEST 3 MENU**************")
+        print('please select TEST RESULTS')
+        print('1. POSITIVE')
+        print('2. NEGATIVE')
+        print()
+        choice = int(input('Enter selection: '))
 
-    if choice==5:
-        print("if positive: QHNF ")
-        print('If Negative - CW')
-        
-        print("Enter previous case ID (followed by T3)(00X = 000X T3):  ")
-        id=input()
-        print("Enter Test Result positive/negative:  ")
-        test=input()
-        print("Enter NW or ICU if positive:  ")
-        ward=input()
-        print("Enter Action needed to be taken(QHNF/CW):  ")
-        action=input()
-        with open('testfile3.txt','a') as testfile3:
-                testfile3.write(id)
-                testfile3.write("\n")
-                testfile3.write(test)
-                testfile3.write("\n")
-                testfile3.write(ward)
-                testfile3.write("\n")
-                testfile3.write(action)
-                testfile3.write("\n\n")
-                testfile3.close()
+        if choice==1:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("Enter NW or ICU:")
+            ward=input()
+            action="QHNF"
+            print("Action taken:"+action)
+            status="ACTIVE"
+            print(status)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(ward)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\t")
+                    testfile.write(status)
+                    testfile.write("\n")
+                    testfile.close()
                 
-        with open('patient_file.txt','a') as patient_file:
-                patient_file.write(id)
-                patient_file.write("\n")
-                patient_file.write(test)
-                patient_file.write("\n")
-                patient_file.write(ward)
-                patient_file.write("\n")
-                patient_file.write(action)
-                patient_file.write("\n\n")
-                patient_file.close()
-                print("Record has been written to file arcording to first ID ")
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(ward)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\t")
+                    patient_file.write(status)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+   
+            return menu()
+        
+        elif choice==2:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("no more tests required")
+            action="RU"
+            print("Action taken:"+action)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\n")
+                    testfile.close()
+                
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+   
+        return menu()
+ 
+    if choice==3:
+        #prompts user for test results in a new sub menu
+        print("************COVID-19 MANAGEMENT**********")
+        print("************TEST 3 MENU**************")
+        print('please select TEST RESULTS')
+        print('1. POSITIVE')
+        print('2. NEGATIVE')
+        print()
+        choice = int(input('Enter selection: '))
+
+        if choice==1:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("Enter NW or ICU:")
+            ward=input()
+            action="QHNF"
+            print("Action taken:"+action)
+            status="ACTIVE"
+            print(status)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(ward)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\t")
+                    testfile.write(status)
+                    testfile.write("\n")
+                    testfile.close()
+                
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(ward)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\t")
+                    patient_file.write(status)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+            
+            return menu()    
+        
+        elif choice==2:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("no more tests required")
+            action="RU"
+            print("Action taken:"+action)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\n")
+                    testfile.close()
+                
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+   
+            return menu()
+    
+    
+   
+    if choice==4:
+        #prompts user for test results in a new sub menu
+        print("************COVID-19 MANAGEMENT**********")
+        print("************TEST 3 MENU**************")
+        print('please select TEST RESULTS')
+        print('1. POSITIVE')
+        print('2. NEGATIVE')
+        print()
+        choice = int(input('Enter selection: '))
+
+        if choice==1:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("Enter NW or ICU:")
+            ward=input()
+            action="QHNF"
+            print("Action taken:"+action)
+            status="ACTIVE"
+            print(status)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\nt")
+                    testfile.write(ward)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\t")
+                    testfile.write(status)
+                    testfile.write("\n")
+                    testfile.close()
+                
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(ward)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\t")
+                    patient_file.write(status)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+            
+            return menu()    
+        
+        elif choice==2:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("no more tests required")
+            action="RU"
+            print("Action taken:"+action)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\n")
+                    testfile.close()
+                
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+   
+            return menu()
+    
+   
+   
+    if choice==5:   
+        #prompts user for test results in a new sub menu
+        print("************COVID-19 MANAGEMENT**********")
+        print("************TEST 3 MENU**************")
+        print('please select TEST RESULTS')
+        print('1. POSITIVE')
+        print('2. NEGATIVE')
+        print()
+        choice = int(input('Enter selection: '))
+
+        if choice==1:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("Enter NW or ICU:")
+            ward=input()
+            action="HQNF"
+            print("Action taken:"+action)
+            status="ACTIVE"
+            print(status)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(ward)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\t")
+                    testfile.write(status)
+                    testfile.write("\n")
+                    testfile.close()
+                
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(ward)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\t")
+                    patient_file.write(status)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+            
+            return menu()   
+        
+        elif choice==2:
+            
+            print("Enter new case id(according to first ID)(00X = 000X):  ")
+            id=input()
+            print("Enter Test Result:")
+            test=input()
+            print("no more tests required")
+            action="CW"
+            print("Action taken:"+action)
+            
+            with open('testfile.txt','a') as testfile:
+                    testfile.write(id)
+                    testfile.write("\t")
+                    testfile.write(test)
+                    testfile.write("\t")
+                    testfile.write(action)
+                    testfile.write("\n")
+                    testfile.close()
+                
+            with open('patient_file.txt','a') as patient_file:
+                    patient_file.write(id)
+                    patient_file.write("\t")
+                    patient_file.write(test)
+                    patient_file.write("\t")
+                    patient_file.write(action)
+                    patient_file.write("\n")
+                    patient_file.close()
+                    print("Record has been written to file arcording to case ID ")
+   
+            return menu()
     
     if choice==6:
-         print('thank you for using covid 19 management system')
+        print('thank you for using covid 19 management system')
     
-    return menu()
+    return menu()    
     
+
 def modifyStatus():
     #modify patient status (active/revovered/deceased)
     pass
@@ -744,3 +1460,4 @@ def menu():
     print()
 
 menu()
+
